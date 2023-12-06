@@ -1,20 +1,19 @@
-#!/bin/python
-# Script Name:         op_challenge06.py
-# Author:              Tommy Taylor
-# Date:                12/4/23
-
-
-# import OS library
+# Import the osi module
 import os
 
-# Variables 
+# Declare and initialize variables
+command1 = "whoami"
+command2 = "ip a"
+command3 = "lshw -short"
 
-user = 'whoami'
-ipaddress = 'ip a'
-hardware = 'lshw -short' 
+# Execute the first bash command using the os.popen() function
+output1 = os.popen(command1).read()
+print(output1)
 
-# Output
+# Execute the second bash command using the os.system() function
+os.system(command2)
 
-print(user)
-print(ipaddress)
-print(hardware)
+# Execute the third bash command using the 'subprocess' module
+import subprocess
+output3 = subprocess.check_output(command3, shell=True)
+print(output3.decode("utf-8"))
