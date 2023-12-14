@@ -1,0 +1,26 @@
+# Define variables for user information
+$firstName = "Franz"
+$lastName = "Ferdinand"
+$displayName = "Franz Ferdinand"
+$samAccountName = "f.ferdinand"
+$email = "ferdi@GlobeXpower.com"
+$department = "TPS Department"
+$officeLocation = "Springfield, OR"
+$containerPath = "OU=GlobeX USA,OU=Springfield,DC=GlobeX,DC=com"
+
+# Import Active Directory module
+Import-Module ActiveDirectory
+
+# Create the new user
+New-ADUser -Name "$displayName" -GivenName $firstName -Surname $lastName -SamAccountName $samAccountName -UserPrincipalName "$samAccountName@$domain.com" -EmailAddress $email -Department $department -OfficeLocation $officeLocation -Path $containerPath
+
+# Set password (optional)
+Set-ADUser -Identity "$displayName" -ChangePasswordPolicy bypass -NewPassword (Read-Host "Enter password for $displayName:" -AsPlainText)
+
+# Verify user creation in ADAC
+Get-ADUser -Identity "$displayName" | Select-Object Name, SamAccountName, EmailAddress, Department, OfficeLocation
+
+# (Optional) Delete user if needed
+Remove-ADUser -Identity "$displayName" -Confirm
+
+# Remember to replace `$domain.com` with your actual domain name
